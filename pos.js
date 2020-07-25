@@ -24,13 +24,44 @@ const xy = (x, y, t) => {
   }
   port.write(a);
 };
-
+let upperInterval = 0;
+let lowerInterval = 0;
+let upperIndex = 0;
+let lowerIndex = 0;
 const upper = (t) => {
-  xy(1,1,t);
+  clearInterval(upperInterval)
+  upperIndex = 0
+  if (t.length > 20) {
+    upperInterval = setInterval(() => {
+      if(upperIndex + 20 > t.length){
+        upperIndex = 0;
+      }
+      const str = t.substring(upperIndex,upperIndex + 20)
+      xy(1,1,str);
+      upperIndex += 1;
+    }, 1000)
+  }
+  else {
+    xy(1,1,t);
+  }
 };
 
 const lower = (t) =>{
-  xy(1,2,t);
+  clearInterval(lowerInterval);
+  lowerIndex = 0;
+  if (t.length > 20) {
+    lowerInterval = setInterval(() => {
+      if(lowerIndex + 20 > t.length){
+        lowerIndex = 0;
+      }
+      const str = t.substring(lowerIndex, lowerIndex + 20);
+      xy(1,2,str);
+      lowerIndex += 1;
+    }, 1000)
+  }
+  else {
+    xy(1,2,t);
+  }
 };
 
 const showTime = () => {
@@ -57,7 +88,7 @@ port.on('error', function(err) {
 
 const init = () => {
   port.write(new Buffer([0x1B, 0x52, 11]));
-  port.write(new Buffer(0x1B, 0x13 ));
+  port.write(new Buffer([0x1B, 0x13]));
 };
 module.exports =  {
   upper,
