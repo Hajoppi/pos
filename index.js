@@ -21,8 +21,9 @@ bot.on(/^\/msg (.+)$/, (msg, props) => {
 });*/
 bot.on('text', (msg) => {
   const text = msg.text;
-  lower = upper;
-  upper = text;
+  upper = lower;
+  lower = text;
+  console.log(upper);
   pos.clear();
   pos.upper(upper);
   pos.lower(lower);

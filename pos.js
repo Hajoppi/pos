@@ -57,6 +57,7 @@ port.on('error', function(err) {
 
 const init = () => {
   port.write(new Buffer([0x1B, 0x52, 11]));
+  port.write(new Buffer(0x1B, 0x13 ));
 };
 module.exports =  {
   upper,
